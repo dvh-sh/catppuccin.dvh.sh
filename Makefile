@@ -78,4 +78,9 @@ test-debug:
 clean:
 	rm -rf $(BUILD_DIR) $(TARGET) $(TEST_TARGET)
 
-.PHONY: all release debug run run-debug test test-verbose test-debug clean
+format:
+	@echo "==> Formatting C++ source files..."
+	@find src/ tests/ -iname "*.cc" -o -iname "*.hpp" | xargs clang-format -i
+	@echo "==> Formatting complete."
+
+.PHONY: all release debug run run-debug test test-verbose test-debug clean format

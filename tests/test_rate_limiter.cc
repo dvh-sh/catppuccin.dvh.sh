@@ -1,7 +1,8 @@
+#include <chrono>
+#include <thread>
+
 #include "../include/catch2.hpp"
 #include "../src/rate_limiter.hpp"
-#include <thread>
-#include <chrono>
 
 using namespace Catppuccin;
 
@@ -9,7 +10,7 @@ TEST_CASE("Rate limiter enforces limits correctly", "[rate_limiter]")
 {
     SECTION("Allows requests under limit")
     {
-        RateLimiter limiter(5, 10); // 5 requests per 10 seconds
+        RateLimiter limiter(5, 10);  // 5 requests per 10 seconds
 
         REQUIRE(limiter.isAllowed("192.168.1.1") == true);
         REQUIRE(limiter.isAllowed("192.168.1.1") == true);
@@ -20,12 +21,12 @@ TEST_CASE("Rate limiter enforces limits correctly", "[rate_limiter]")
 
     SECTION("Blocks requests over limit")
     {
-        RateLimiter limiter(3, 10); // 3 requests per 10 seconds
+        RateLimiter limiter(3, 10);  // 3 requests per 10 seconds
 
         REQUIRE(limiter.isAllowed("192.168.1.2") == true);
         REQUIRE(limiter.isAllowed("192.168.1.2") == true);
         REQUIRE(limiter.isAllowed("192.168.1.2") == true);
-        REQUIRE(limiter.isAllowed("192.168.1.2") == false); // Should be blocked
+        REQUIRE(limiter.isAllowed("192.168.1.2") == false);  // Should be blocked
     }
 
     SECTION("Different IPs have separate limits")
@@ -34,19 +35,19 @@ TEST_CASE("Rate limiter enforces limits correctly", "[rate_limiter]")
 
         REQUIRE(limiter.isAllowed("192.168.1.3") == true);
         REQUIRE(limiter.isAllowed("192.168.1.3") == true);
-        REQUIRE(limiter.isAllowed("192.168.1.3") == false); // Blocked
+        REQUIRE(limiter.isAllowed("192.168.1.3") == false);  // Blocked
 
-        REQUIRE(limiter.isAllowed("192.168.1.4") == true); // Different IP, should work
+        REQUIRE(limiter.isAllowed("192.168.1.4") == true);  // Different IP, should work
         REQUIRE(limiter.isAllowed("192.168.1.4") == true);
     }
 
     SECTION("Localhost is always allowed")
     {
-        RateLimiter limiter(1, 10); // Very restrictive
+        RateLimiter limiter(1, 10);  // Very restrictive
 
         REQUIRE(limiter.isAllowed("127.0.0.1") == true);
         REQUIRE(limiter.isAllowed("127.0.0.1") == true);
-        REQUIRE(limiter.isAllowed("127.0.0.1") == true); // Should always work
+        REQUIRE(limiter.isAllowed("127.0.0.1") == true);  // Should always work
         REQUIRE(limiter.isAllowed("localhost") == true);
         REQUIRE(limiter.isAllowed("::1") == true);
     }

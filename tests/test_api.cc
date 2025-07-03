@@ -34,7 +34,10 @@ TEST_CASE("API responses have correct structure", "[api]")
 
         // Check that each flavor has the expected colors
         const std::vector<std::string> flavors = {"latte", "frappe", "macchiato", "mocha"};
-        const std::vector<std::string> colors = {"rosewater", "flamingo", "pink", "mauve", "red", "maroon", "peach", "yellow", "green", "teal", "sky", "sapphire", "blue", "lavender", "text", "subtext1", "subtext0", "overlay2", "overlay1", "overlay0", "surface2", "surface1", "surface0", "base", "mantle", "crust"};
+        const std::vector<std::string> colors = {
+            "rosewater", "flamingo", "pink",     "mauve",    "red",      "maroon", "peach",    "yellow",   "green",
+            "teal",      "sky",      "sapphire", "blue",     "lavender", "text",   "subtext1", "subtext0", "overlay2",
+            "overlay1",  "overlay0", "surface2", "surface1", "surface0", "base",   "mantle",   "crust"};
 
         for (const auto &flavor : flavors)
         {

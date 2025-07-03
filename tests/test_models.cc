@@ -17,7 +17,7 @@ TEST_CASE("DataType conversion functions work correctly", "[models]")
         REQUIRE(stringToDataType("ports") == PORTS);
         REQUIRE(stringToDataType("userstyles") == USERSTYLES);
         REQUIRE(stringToDataType("categories") == CATEGORIES);
-        REQUIRE(stringToDataType("invalid") == PORTS); // default fallback
+        REQUIRE(stringToDataType("invalid") == PORTS);  // default fallback
     }
 }
 

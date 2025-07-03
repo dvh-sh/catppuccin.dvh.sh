@@ -8,10 +8,12 @@
  * @description
  * Main entry point for the Catppuccin API server.
  */
+#include <signal.h>
+
+#include <iostream>
+
 #include "catppuccin_api.hpp"
 #include "config.hpp"
-#include <iostream>
-#include <signal.h>
 
 // Global server instance for graceful shutdown
 httplib::Server *g_server = nullptr;
@@ -48,8 +50,8 @@ int main()
         server.set_keep_alive_timeout(30);
         server.set_read_timeout(5, 0);
         server.set_write_timeout(5, 0);
-        server.set_idle_interval(0, 100000);        // 100ms
-        server.set_payload_max_length(1024 * 1024); // 1MB max
+        server.set_idle_interval(0, 100000);         // 100ms
+        server.set_payload_max_length(1024 * 1024);  // 1MB max
 
         api.setupRoutes(server);
 
@@ -78,8 +80,7 @@ int main()
             std::cerr << "Failed to start server on " << host << ":" << port << std::endl;
             return 1;
         }
-    }
-    catch (const std::exception &e)
+    } catch (const std::exception &e)
     {
         std::cerr << "Fatal error: " << e.what() << std::endl;
         return 1;
