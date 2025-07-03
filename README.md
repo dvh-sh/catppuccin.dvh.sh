@@ -24,7 +24,7 @@ The recommended way to run this API is with Docker.
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/dvhsh/catppuccin-api.git
+    git clone https://github.com/dvh-sh/catppuccin.dvh.sh.git
     cd catppuccin-api
     ```
 
