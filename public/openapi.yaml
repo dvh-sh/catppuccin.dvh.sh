@@ -21,7 +21,7 @@ paths:
       description: Check the operational status of the API.
       tags: [General]
       responses:
-        '200':
+        "200":
           description: Service is healthy.
           content:
             application/json:
@@ -35,7 +35,7 @@ paths:
       description: Retrieve the full Catppuccin color palette for all four flavors.
       tags: [General]
       responses:
-        '200':
+        "200":
           description: A JSON object containing all color palettes.
           content:
             application/json:
@@ -52,7 +52,7 @@ paths:
       description: Check the current rate limit status for your IP address.
       tags: [General]
       responses:
-        '200':
+        "200":
           description: Current rate limit information.
           content:
             application/json:
@@ -70,7 +70,7 @@ paths:
       description: Retrieve performance and usage metrics for the API server.
       tags: [General]
       responses:
-        '200':
+        "200":
           description: Server performance metrics.
           content:
             application/json:
@@ -86,12 +86,12 @@ paths:
       description: Get a paginated list of all Catppuccin ports (themes for applications).
       tags: [Ports]
       parameters:
-        - $ref: '#/components/parameters/Page'
-        - $ref: '#/components/parameters/PerPage'
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
       responses:
-        '200':
+        "200":
           description: A paginated list of ports.
-          headers: { $ref: '#/components/headers/RateLimitHeaders' }
+          headers: { $ref: "#/components/headers/RateLimitHeaders" }
           content:
             application/json:
               schema:
@@ -100,11 +100,11 @@ paths:
                   ports:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Port'
+                      $ref: "#/components/schemas/Port"
                   pagination:
-                    $ref: '#/components/schemas/Pagination'
-        '429': { $ref: '#/components/responses/RateLimitExceeded' }
-        '500': { $ref: '#/components/responses/ServerError' }
+                    $ref: "#/components/schemas/Pagination"
+        "429": { $ref: "#/components/responses/RateLimitExceeded" }
+        "500": { $ref: "#/components/responses/ServerError" }
   /ports/{key}:
     get:
       summary: Get a Specific Port
@@ -117,27 +117,27 @@ paths:
           schema: { type: string }
           description: The unique key of the port.
       responses:
-        '200':
+        "200":
           description: The requested port object.
-          headers: { $ref: '#/components/headers/RateLimitHeaders' }
+          headers: { $ref: "#/components/headers/RateLimitHeaders" }
           content:
             application/json:
-              schema: { $ref: '#/components/schemas/Port' }
-        '404': { $ref: '#/components/responses/NotFound' }
-        '429': { $ref: '#/components/responses/RateLimitExceeded' }
-        '500': { $ref: '#/components/responses/ServerError' }
+              schema: { $ref: "#/components/schemas/Port" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "429": { $ref: "#/components/responses/RateLimitExceeded" }
+        "500": { $ref: "#/components/responses/ServerError" }
   /userstyles:
     get:
       summary: List All Userstyles
       description: Get a paginated list of all Catppuccin userstyles (themes for websites).
       tags: [Userstyles]
       parameters:
-        - $ref: '#/components/parameters/Page'
-        - $ref: '#/components/parameters/PerPage'
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
       responses:
-        '200':
+        "200":
           description: A paginated list of userstyles.
-          headers: { $ref: '#/components/headers/RateLimitHeaders' }
+          headers: { $ref: "#/components/headers/RateLimitHeaders" }
           content:
             application/json:
               schema:
@@ -146,11 +146,11 @@ paths:
                   userstyles:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Userstyle'
+                      $ref: "#/components/schemas/Userstyle"
                   pagination:
-                    $ref: '#/components/schemas/Pagination'
-        '429': { $ref: '#/components/responses/RateLimitExceeded' }
-        '500': { $ref: '#/components/responses/ServerError' }
+                    $ref: "#/components/schemas/Pagination"
+        "429": { $ref: "#/components/responses/RateLimitExceeded" }
+        "500": { $ref: "#/components/responses/ServerError" }
   /userstyles/{key}:
     get:
       summary: Get a Specific Userstyle
@@ -163,27 +163,27 @@ paths:
           schema: { type: string }
           description: The unique key of the userstyle.
       responses:
-        '200':
+        "200":
           description: The requested userstyle object.
-          headers: { $ref: '#/components/headers/RateLimitHeaders' }
+          headers: { $ref: "#/components/headers/RateLimitHeaders" }
           content:
             application/json:
-              schema: { $ref: '#/components/schemas/Userstyle' }
-        '404': { $ref: '#/components/responses/NotFound' }
-        '429': { $ref: '#/components/responses/RateLimitExceeded' }
-        '500': { $ref: '#/components/responses/ServerError' }
+              schema: { $ref: "#/components/schemas/Userstyle" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "429": { $ref: "#/components/responses/RateLimitExceeded" }
+        "500": { $ref: "#/components/responses/ServerError" }
   /categories:
     get:
       summary: List All Categories
       description: Get a paginated list of all available categories for ports and userstyles.
       tags: [Categories]
       parameters:
-        - $ref: '#/components/parameters/Page'
-        - $ref: '#/components/parameters/PerPage'
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
       responses:
-        '200':
+        "200":
           description: A paginated list of categories.
-          headers: { $ref: '#/components/headers/RateLimitHeaders' }
+          headers: { $ref: "#/components/headers/RateLimitHeaders" }
           content:
             application/json:
               schema:
@@ -192,11 +192,11 @@ paths:
                   categories:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Category'
+                      $ref: "#/components/schemas/Category"
                   pagination:
-                    $ref: '#/components/schemas/Pagination'
-        '429': { $ref: '#/components/responses/RateLimitExceeded' }
-        '500': { $ref: '#/components/responses/ServerError' }
+                    $ref: "#/components/schemas/Pagination"
+        "429": { $ref: "#/components/responses/RateLimitExceeded" }
+        "500": { $ref: "#/components/responses/ServerError" }
   /categories/{key}:
     get:
       summary: Get a Specific Category
@@ -209,27 +209,27 @@ paths:
           schema: { type: string }
           description: The unique key of the category.
       responses:
-        '200':
+        "200":
           description: The requested category object.
-          headers: { $ref: '#/components/headers/RateLimitHeaders' }
+          headers: { $ref: "#/components/headers/RateLimitHeaders" }
           content:
             application/json:
-              schema: { $ref: '#/components/schemas/Category' }
-        '404': { $ref: '#/components/responses/NotFound' }
-        '429': { $ref: '#/components/responses/RateLimitExceeded' }
-        '500': { $ref: '#/components/responses/ServerError' }
+              schema: { $ref: "#/components/schemas/Category" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "429": { $ref: "#/components/responses/RateLimitExceeded" }
+        "500": { $ref: "#/components/responses/ServerError" }
   /collaborators:
     get:
       summary: List All Collaborators
       description: Get a paginated list of all collaborators across all projects.
       tags: [Collaborators]
       parameters:
-        - $ref: '#/components/parameters/Page'
-        - $ref: '#/components/parameters/PerPage'
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
       responses:
-        '200':
+        "200":
           description: A paginated list of collaborators.
-          headers: { $ref: '#/components/headers/RateLimitHeaders' }
+          headers: { $ref: "#/components/headers/RateLimitHeaders" }
           content:
             application/json:
               schema:
@@ -238,11 +238,11 @@ paths:
                   collaborators:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Collaborator'
+                      $ref: "#/components/schemas/Collaborator"
                   pagination:
-                    $ref: '#/components/schemas/Pagination'
-        '429': { $ref: '#/components/responses/RateLimitExceeded' }
-        '500': { $ref: '#/components/responses/ServerError' }
+                    $ref: "#/components/schemas/Pagination"
+        "429": { $ref: "#/components/responses/RateLimitExceeded" }
+        "500": { $ref: "#/components/responses/ServerError" }
   /collaborators/{username}:
     get:
       summary: Get a Specific Collaborator
@@ -255,27 +255,27 @@ paths:
           schema: { type: string }
           description: The GitHub username of the collaborator.
       responses:
-        '200':
+        "200":
           description: The requested collaborator object.
-          headers: { $ref: '#/components/headers/RateLimitHeaders' }
+          headers: { $ref: "#/components/headers/RateLimitHeaders" }
           content:
             application/json:
-              schema: { $ref: '#/components/schemas/Collaborator' }
-        '404': { $ref: '#/components/responses/NotFound' }
-        '429': { $ref: '#/components/responses/RateLimitExceeded' }
-        '500': { $ref: '#/components/responses/ServerError' }
+              schema: { $ref: "#/components/schemas/Collaborator" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "429": { $ref: "#/components/responses/RateLimitExceeded" }
+        "500": { $ref: "#/components/responses/ServerError" }
   /showcases:
     get:
       summary: List All Showcases
       description: Get a paginated list of featured projects using Catppuccin.
       tags: [Showcases]
       parameters:
-        - $ref: '#/components/parameters/Page'
-        - $ref: '#/components/parameters/PerPage'
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
       responses:
-        '200':
+        "200":
           description: A paginated list of showcases.
-          headers: { $ref: '#/components/headers/RateLimitHeaders' }
+          headers: { $ref: "#/components/headers/RateLimitHeaders" }
           content:
             application/json:
               schema:
@@ -284,11 +284,11 @@ paths:
                   showcases:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Showcase'
+                      $ref: "#/components/schemas/Showcase"
                   pagination:
-                    $ref: '#/components/schemas/Pagination'
-        '429': { $ref: '#/components/responses/RateLimitExceeded' }
-        '500': { $ref: '#/components/responses/ServerError' }
+                    $ref: "#/components/schemas/Pagination"
+        "429": { $ref: "#/components/responses/RateLimitExceeded" }
+        "500": { $ref: "#/components/responses/ServerError" }
 
 components:
   parameters:
@@ -306,26 +306,42 @@ components:
       schema: { type: integer, default: 20, minimum: 1, maximum: 100 }
   headers:
     RateLimitHeaders:
-      X-RateLimit-Limit: { schema: { type: integer }, description: The maximum number of requests you're permitted to make per hour. }
-      X-RateLimit-Remaining: { schema: { type: integer }, description: The number of requests remaining in the current rate limit window. }
-      X-RateLimit-Reset: { schema: { type: integer }, description: The time at which the current rate limit window resets in UTC epoch seconds. }
-      X-RateLimit-Used: { schema: { type: integer }, description: The number of requests you've made in the current rate limit window. }
+      X-RateLimit-Limit:
+        {
+          schema: { type: integer },
+          description: The maximum number of requests you're permitted to make per hour.,
+        }
+      X-RateLimit-Remaining:
+        {
+          schema: { type: integer },
+          description: The number of requests remaining in the current rate limit window.,
+        }
+      X-RateLimit-Reset:
+        {
+          schema: { type: integer },
+          description: The time at which the current rate limit window resets in UTC epoch seconds.,
+        }
+      X-RateLimit-Used:
+        {
+          schema: { type: integer },
+          description: The number of requests you've made in the current rate limit window.,
+        }
   responses:
     NotFound:
       description: The requested resource could not be found.
       content:
         application/json:
-          schema: { $ref: '#/components/schemas/Error' }
+          schema: { $ref: "#/components/schemas/Error" }
     RateLimitExceeded:
       description: Rate limit exceeded.
       content:
         application/json:
-          schema: { $ref: '#/components/schemas/Error' }
+          schema: { $ref: "#/components/schemas/Error" }
     ServerError:
       description: An unexpected internal server error occurred.
       content:
         application/json:
-          schema: { $ref: '#/components/schemas/Error' }
+          schema: { $ref: "#/components/schemas/Error" }
   schemas:
     Error:
       type: object
@@ -344,56 +360,81 @@ components:
       type: object
       properties:
         name: { type: string, example: "Marketplace" }
-        url: { type: string, format: uri, example: "https://marketplace.visualstudio.com/items?itemName=Catppuccin.catppuccin-vsc" }
+        url:
+          {
+            type: string,
+            format: uri,
+            example: "https://marketplace.visualstudio.com/items?itemName=Catppuccin.catppuccin-vsc",
+          }
         icon: { type: string, example: "visualstudiocode" }
         color: { type: string, example: "blue" }
     Repository:
       type: object
       properties:
         name: { type: string, example: "vscode" }
-        url: { type: string, format: uri, example: "https://github.com/catppuccin/vscode" }
-        current-maintainers: { type: array, items: { type: string, example: "pocco-a-poco" } }
+        url:
+          {
+            type: string,
+            format: uri,
+            example: "https://github.com/catppuccin/vscode",
+          }
+        current-maintainers:
+          { type: array, items: { type: string, example: "pocco-a-poco" } }
         past-maintainers: { type: array, items: { type: string } }
     Port:
       type: object
       properties:
         key: { type: string, example: "vscode" }
         name: { type: string, example: "Visual Studio Code" }
-        categories: { type: array, items: { type: string, example: "code_editor" } }
+        categories:
+          { type: array, items: { type: string, example: "code_editor" } }
         platform: { type: array, items: { type: string, example: "linux" } }
         color: { type: string, example: "blue" }
         icon: { type: string, example: "visualstudiocode" }
         upstreamed: { type: boolean, example: false }
-        repository: { $ref: '#/components/schemas/Repository' }
-        links: { type: array, items: { $ref: '#/components/schemas/Link' } }
+        repository: { $ref: "#/components/schemas/Repository" }
+        links: { type: array, items: { $ref: "#/components/schemas/Link" } }
         is-archived: { type: boolean, example: false }
     Userstyle:
       type: object
       properties:
         key: { type: string, example: "youtube" }
         name: { type: string, example: "YouTube" }
-        categories: { type: array, items: { type: string, example: "entertainment" } }
+        categories:
+          { type: array, items: { type: string, example: "entertainment" } }
         link: { type: string, format: uri, example: "https://youtube.com" }
         color: { type: string, example: "red" }
         icon: { type: string, example: "youtube" }
         note: { type: string, nullable: true }
-        current-maintainers: { type: array, items: { type: string, example: "isabelinc" } }
+        current-maintainers:
+          { type: array, items: { type: string, example: "isabelinc" } }
         past-maintainers: { type: array, items: { type: string } }
     Category:
       type: object
       properties:
         key: { type: string, example: "terminal" }
         name: { type: string, example: "Terminal" }
-        description: { type: string, example: "Themes for terminal emulators and shells." }
+        description:
+          { type: string, example: "Themes for terminal emulators and shells." }
         emoji: { type: string, example: "💻" }
     Collaborator:
       type: object
       properties:
         username: { type: string, example: "uncenter" }
-        url: { type: string, format: uri, example: "https://github.com/uncenter" }
+        url:
+          { type: string, format: uri, example: "https://github.com/uncenter" }
     Showcase:
       type: object
       properties:
         title: { type: string, example: "My Awesome Desktop" }
-        description: { type: string, example: "A custom Linux desktop setup featuring Catppuccin." }
-        link: { type: string, format: uri, example: "https://reddit.com/r/unixporn/..." }
+        description:
+          {
+            type: string,
+            example: "A custom Linux desktop setup featuring Catppuccin.",
+          }
+        link:
+          {
+            type: string,
+            format: uri,
+            example: "https://reddit.com/r/unixporn/...",
+          }

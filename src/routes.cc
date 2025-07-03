@@ -12,6 +12,8 @@
  */
 #include "catppuccin_api.hpp"
 #include <iostream>
+#include <fstream>
+#include <regex>
 
 namespace Catppuccin
 {
@@ -21,6 +23,29 @@ namespace Catppuccin
      */
     void CatppuccinAPI::setupRoutes(httplib::Server &server)
     {
+        // This handler will catch requests ending in .html.md
+        server.Get(R"(.*\.md$)", [](const httplib::Request &req, httplib::Response &res)
+                   {
+            // Get the full request path, e.g., "/privacy/index.html.md"
+            std::string request_path = req.path;
+            
+            // Create the path to the corresponding HTML file by stripping ".md"
+            // e.g., "/privacy/index.html.md" -> "/privacy/index.html"
+            std::string html_equivalent_path = request_path.substr(0, request_path.length() - 3);
+
+            // Construct the full filesystem path
+            std::string file_system_path = "./public" + html_equivalent_path;
+
+            std::ifstream file(file_system_path);
+            if (file.is_open()) {
+                std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+                // Serve the HTML content, but tell the client it's Markdown
+                res.set_content(content, "text/markdown; charset=UTF-8");
+            } else {
+                res.status = 404;
+                res.set_content("Not Found: " + file_system_path, "text/plain");
+            } });
+
         server.set_mount_point("/", "./public");
 
         // CORS and rate limiting for all routes

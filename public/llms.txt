@@ -1,0 +1,26 @@
+# Catppuccin API
+
+> A high-performance, lightweight, read-only REST API for serving Catppuccin theme data. It is built with C++ for speed and low resource usage, designed for containerized deployment via Docker.
+
+This API is unofficial and serves data cached from public Catppuccin GitHub repositories. It is designed for high-concurrency and low-latency environments. The stack includes C++17, `nlohmann/json`, and `cpp-httplib`.
+
+## Core Documentation
+
+- [API Reference (Home Page)](https://catppuccin.dvh.sh/index.html.md): The main documentation page listing all available endpoints.
+- [OpenAPI Specification](https://catppuccin.dvh.sh/openapi.yaml): A machine-readable contract describing the full API.
+
+## Source Code & Build
+
+- [Main GitHub Repository](https://github.com/dvh-sh/catppuccin.dvh.sh): The complete source code for the API server.
+- [Dockerfile](https://github.com/dvh-sh/catppuccin.dvh.sh/blob/main/Dockerfile): Defines the container image build.
+
+## Related Projects
+
+- [Catppuccin Official GitHub](https://github.com/catppuccin): The source for all theme data used by this API.
+- [Catppuccin Raycast Extension](https://www.raycast.com/dvhsh/catppuccin): A primary consumer of this API.
+
+## Optional
+
+- [Terms of Service](https://catppuccin.dvh.sh/terms/index.html.md): The terms under which this free service is provided.
+- [Privacy Policy](https://catppuccin.dvh.sh/privacy/index.html.md): Details our commitment to not storing any user data.
+- [Security Policy](https://catppuccin.dvh.sh/.well-known/security.txt): Instructions for reporting security vulnerabilities.
