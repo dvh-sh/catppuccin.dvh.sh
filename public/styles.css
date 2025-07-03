@@ -1,130 +1,130 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Courier New', monospace;
-    background: #1e1e2e;
-    color: #cdd6f4;
-    line-height: 1.5;
+  font-family: "Courier New", monospace;
+  background: #1e1e2e;
+  color: #cdd6f4;
+  line-height: 1.5;
 }
 
 .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 3rem 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
 }
 
 h1 {
-    color: #f5c2e7;
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    text-align: center;
+  color: #f5c2e7;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-align: center;
 }
 
 .subtitle {
-    color: #a6adc8;
-    text-align: center;
-    margin-bottom: 3rem;
+  color: #a6adc8;
+  text-align: center;
+  margin-bottom: 3rem;
 }
 
 .banner {
-    background: #f5c2e7;
-    color: #1e1e2e;
-    padding: 1rem;
-    text-align: center;
-    margin-bottom: 3rem;
-    border: 2px solid #cba6f7;
+  background: #f5c2e7;
+  color: #1e1e2e;
+  padding: 1rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  border: 2px solid #cba6f7;
 }
 
 .banner a {
-    color: #1e1e2e;
-    text-decoration: none;
-    font-weight: bold;
+  color: #1e1e2e;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .banner a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .section {
-    background: #313244;
-    border: 1px solid #585b70;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
+  background: #313244;
+  border: 1px solid #585b70;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .section h2 {
-    color: #f9e2af;
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid #585b70;
-    padding-bottom: 0.5rem;
+  color: #f9e2af;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #585b70;
+  padding-bottom: 0.5rem;
 }
 
 .endpoint {
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px dotted #585b70;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px dotted #585b70;
 }
 
 .endpoint:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .method-path {
-    margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .method {
-    background: #45475a;
-    color: #a6e3a1;
-    padding: 0.2rem 0.5rem;
-    font-weight: bold;
-    margin-right: 1rem;
+  background: #45475a;
+  color: #a6e3a1;
+  padding: 0.2rem 0.5rem;
+  font-weight: bold;
+  margin-right: 1rem;
 }
 
 .path {
-    color: #89dceb;
-    font-weight: bold;
+  color: #89dceb;
+  font-weight: bold;
 }
 
 .desc {
-    color: #bac2de;
-    margin-bottom: 0.5rem;
+  color: #bac2de;
+  margin-bottom: 0.5rem;
 }
 
 .params {
-    color: #f5c2e7;
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
+  color: #f5c2e7;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
 }
 
 .example {
-    background: #1e1e2e;
-    border: 1px solid #45475a;
-    padding: 0.5rem;
-    color: #a6e3a1;
-    font-size: 0.85rem;
-    word-break: break-all;
+  background: #1e1e2e;
+  border: 1px solid #45475a;
+  padding: 0.5rem;
+  color: #a6e3a1;
+  font-size: 0.85rem;
+  word-break: break-all;
 }
 
 .footer {
-    text-align: center;
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid #313244;
-    color: #a6adc8;
+  text-align: center;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #313244;
+  color: #a6adc8;
 }
 
 .footer a {
-    color: #f5c2e7;
-    text-decoration: none;
+  color: #f5c2e7;
+  text-decoration: none;
 }
 
 .footer a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }

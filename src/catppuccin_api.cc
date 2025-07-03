@@ -451,7 +451,6 @@ namespace Catppuccin
 
         return response;
     }
-
     /*
      * @brief Retrieves a paginated list of Catppuccin userstyles.
      */
@@ -471,21 +470,12 @@ namespace Catppuccin
             const json &data = fetcher_.getCachedData(USERSTYLES);
             json all_userstyles = json::array();
 
-            if (data.contains("userstyles") && data["userstyles"].is_array())
+            if (data.contains("userstyles") && data["userstyles"].is_object())
             {
-                for (const auto &userstyle : data["userstyles"])
+                for (const auto &[key, userstyle] : data["userstyles"].items())
                 {
                     json u = userstyle;
-                    u["is-userstyle"] = true;
-                    all_userstyles.push_back(u);
-                }
-            }
-            else if (data.is_array())
-            {
-                // Handle case where data is directly an array
-                for (const auto &userstyle : data)
-                {
-                    json u = userstyle;
+                    u["key"] = key;
                     u["is-userstyle"] = true;
                     all_userstyles.push_back(u);
                 }
@@ -529,32 +519,16 @@ namespace Catppuccin
         {
             const json &data = fetcher_.getCachedData(USERSTYLES);
 
-            // Search in userstyles array
-            if (data.contains("userstyles") && data["userstyles"].is_array())
+            if (data.contains("userstyles") && data["userstyles"].is_object())
             {
-                for (const auto &userstyle : data["userstyles"])
+                const auto &userstyles = data["userstyles"];
+                if (userstyles.contains(identifier))
                 {
-                    if (userstyle.contains("key") && userstyle["key"] == identifier)
-                    {
-                        response.data = userstyle;
-                        response.data["is-userstyle"] = true;
-                        response.success = true;
-                        return response;
-                    }
-                }
-            }
-            else if (data.is_array())
-            {
-                // Handle case where data is directly an array
-                for (const auto &userstyle : data)
-                {
-                    if (userstyle.contains("key") && userstyle["key"] == identifier)
-                    {
-                        response.data = userstyle;
-                        response.data["is-userstyle"] = true;
-                        response.success = true;
-                        return response;
-                    }
+                    response.data = userstyles[identifier];
+                    response.data["key"] = identifier;
+                    response.data["is-userstyle"] = true;
+                    response.success = true;
+                    return response;
                 }
             }
 
@@ -605,6 +579,7 @@ namespace Catppuccin
         response.data["total_errors"] = error_count_.load();
         response.data["requests_per_second"] = uptime > 0 ? (double)request_count_.load() / uptime : 0;
         response.data["error_rate"] = request_count_.load() > 0 ? (double)error_count_.load() / request_count_.load() : 0;
+
         response.success = true;
 
         return response;

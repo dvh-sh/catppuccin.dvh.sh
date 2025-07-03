@@ -78,7 +78,7 @@ namespace Catppuccin
         ApiResponse response;
 
         std::ostringstream temp_stream;
-        temp_stream << "/tmp/catppuccin_" << getpid() << "_" << time(NULL) << ".json";
+        temp_stream << "/tmp/catppuccin_" << getpid() << "_" << time(NULL) << ".data";
         std::string tempfile = temp_stream.str();
 
         std::string cmd = "curl -s -f -o " + tempfile + " '" + url + "'";
@@ -92,18 +92,75 @@ namespace Catppuccin
             {
                 std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
                 file.close();
-                remove(tempfile.c_str());
 
                 if (!content.empty())
                 {
                     std::cout << "Successfully fetched " << content.length() << " bytes" << std::endl;
-                    response.data = json::parse(content);
-                    response.success = true;
+
+                    try
+                    {
+                        // Try parsing as JSON first
+                        response.data = json::parse(content);
+                        response.success = true;
+                        std::cout << "Parsed as JSON successfully" << std::endl;
+                    }
+                    catch (const std::exception &json_error)
+                    {
+                        std::cout << "JSON parse failed, trying YAML conversion..." << std::endl;
+
+                        // Try yq for YAML to JSON conversion
+                        std::string json_tempfile = tempfile + ".json";
+                        std::string yq_cmd = "yq eval -o=json '" + tempfile + "' > " + json_tempfile;
+
+                        if (system(yq_cmd.c_str()) == 0)
+                        {
+                            std::ifstream json_file(json_tempfile);
+                            if (json_file.is_open())
+                            {
+                                std::string json_content((std::istreambuf_iterator<char>(json_file)), std::istreambuf_iterator<char>());
+                                json_file.close();
+                                remove(json_tempfile.c_str());
+
+                                response.data = json::parse(json_content);
+                                response.success = true;
+                                std::cout << "YAML converted to JSON using yq" << std::endl;
+                            }
+                            else
+                            {
+                                response.error_message = "Failed to read yq converted JSON";
+                            }
+                        }
+                        else
+                        {
+                            // Fallback: try alternative yq syntax
+                            std::string alt_yq_cmd = "yq . '" + tempfile + "' > " + json_tempfile;
+                            if (system(alt_yq_cmd.c_str()) == 0)
+                            {
+                                std::ifstream json_file(json_tempfile);
+                                if (json_file.is_open())
+                                {
+                                    std::string json_content((std::istreambuf_iterator<char>(json_file)), std::istreambuf_iterator<char>());
+                                    json_file.close();
+                                    remove(json_tempfile.c_str());
+
+                                    response.data = json::parse(json_content);
+                                    response.success = true;
+                                    std::cout << "YAML converted to JSON using alternative yq" << std::endl;
+                                }
+                            }
+                            else
+                            {
+                                response.error_message = "yq not available or failed: " + std::string(json_error.what());
+                                remove(json_tempfile.c_str());
+                            }
+                        }
+                    }
                 }
                 else
                 {
                     response.error_message = "Empty response from: " + url;
                 }
+                remove(tempfile.c_str());
             }
             else
             {

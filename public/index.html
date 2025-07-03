@@ -1,145 +1,168 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Catppuccin API</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <div class="container">
-        <h1>Catppuccin API</h1>
-        <p class="subtitle">
-            A simple, unofficial API to fetch Catppuccin themes, ports, collaborators, and more.
+      <h1>Catppuccin API</h1>
+      <p class="subtitle">
+        A simple, unofficial API to fetch Catppuccin themes, ports,
+        collaborators, and more.
+      </p>
+
+      <div class="banner">
+        <a href="https://www.raycast.com/dvhsh/catppuccin" target="_blank">
+          Catppuccin Raycast Extension
+        </a>
+      </div>
+
+      <div class="section">
+        <h2>General</h2>
+        <div class="endpoint">
+          <div class="method-path">
+            <span class="method">GET</span>
+            <span class="path">/health</span>
+          </div>
+          <div class="desc">Health check</div>
+          <div class="example">curl https://catppuccin.dvh.sh/health</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Ports</h2>
+        <div class="endpoint">
+          <div class="method-path">
+            <span class="method">GET</span>
+            <span class="path">/ports</span>
+          </div>
+          <div class="desc">List all ports</div>
+          <div class="params">page, per_page</div>
+          <div class="example">
+            curl "https://catppuccin.dvh.sh/ports?page=1&per_page=10"
+          </div>
+        </div>
+        <div class="endpoint">
+          <div class="method-path">
+            <span class="method">GET</span>
+            <span class="path">/ports/{id}</span>
+          </div>
+          <div class="desc">Get specific port</div>
+          <div class="example">curl https://catppuccin.dvh.sh/ports/nvim</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Userstyles</h2>
+        <div class="endpoint">
+          <div class="method-path">
+            <span class="method">GET</span>
+            <span class="path">/userstyles</span>
+          </div>
+          <div class="desc">List all userstyles</div>
+          <div class="params">page, per_page</div>
+          <div class="example">
+            curl "https://catppuccin.dvh.sh/userstyles?page=1&per_page=10"
+          </div>
+        </div>
+        <div class="endpoint">
+          <div class="method-path">
+            <span class="method">GET</span>
+            <span class="path">/userstyles/{id}</span>
+          </div>
+          <div class="desc">Get specific userstyle</div>
+          <div class="example">
+            curl https://catppuccin.dvh.sh/userstyles/youtube
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Collaborators</h2>
+        <div class="endpoint">
+          <div class="method-path">
+            <span class="method">GET</span>
+            <span class="path">/collaborators</span>
+          </div>
+          <div class="desc">List collaborators</div>
+          <div class="params">page, per_page</div>
+          <div class="example">
+            curl "https://catppuccin.dvh.sh/collaborators?page=1&per_page=20"
+          </div>
+        </div>
+        <div class="endpoint">
+          <div class="method-path">
+            <span class="method">GET</span>
+            <span class="path">/collaborators/{username}</span>
+          </div>
+          <div class="desc">Get collaborator</div>
+          <div class="example">
+            curl https://catppuccin.dvh.sh/collaborators/uncenter
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Categories</h2>
+        <div class="endpoint">
+          <div class="method-path">
+            <span class="method">GET</span>
+            <span class="path">/categories</span>
+          </div>
+          <div class="desc">List categories</div>
+          <div class="params">page, per_page</div>
+          <div class="example">curl https://catppuccin.dvh.sh/categories</div>
+        </div>
+        <div class="endpoint">
+          <div class="method-path">
+            <span class="method">GET</span>
+            <span class="path">/categories/{key}</span>
+          </div>
+          <div class="desc">Get category</div>
+          <div class="example">
+            curl https://catppuccin.dvh.sh/categories/terminal
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Other</h2>
+        <div class="endpoint">
+          <div class="method-path">
+            <span class="method">GET</span>
+            <span class="path">/showcases</span>
+          </div>
+          <div class="desc">Featured projects</div>
+          <div class="params">page, per_page</div>
+          <div class="example">curl https://catppuccin.dvh.sh/showcases</div>
+        </div>
+        <div class="endpoint">
+          <div class="method-path">
+            <span class="method">GET</span>
+            <span class="path">/palette</span>
+          </div>
+          <div class="desc">Color palette</div>
+          <div class="example">curl https://catppuccin.dvh.sh/palette</div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>
+          API:
+          <a href="https://catppuccin.dvh.sh" target="_blank"
+            >catppuccin.dvh.sh</a
+          >
         </p>
-
-        <div class="banner">
-            <a href="https://www.raycast.com/dvhsh/catppuccin" target="_blank">
-                Catppuccin Raycast Extension 
-            </a>
-        </div>
-
-        <div class="section">
-            <h2>General</h2>
-            <div class="endpoint">
-                <div class="method-path">
-                    <span class="method">GET</span>
-                    <span class="path">/health</span>
-                </div>
-                <div class="desc">Health check</div>
-                <div class="example">curl https://catppuccin.dvh.sh/health</div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>Ports</h2>
-            <div class="endpoint">
-                <div class="method-path">
-                    <span class="method">GET</span>
-                    <span class="path">/ports</span>
-                </div>
-                <div class="desc">List all ports</div>
-                <div class="params">page, per_page</div>
-                <div class="example">curl "https://catppuccin.dvh.sh/ports?page=1&per_page=10"</div>
-            </div>
-            <div class="endpoint">
-                <div class="method-path">
-                    <span class="method">GET</span>
-                    <span class="path">/ports/{id}</span>
-                </div>
-                <div class="desc">Get specific port</div>
-                <div class="example">curl https://catppuccin.dvh.sh/ports/nvim</div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>Userstyles</h2>
-            <div class="endpoint">
-                <div class="method-path">
-                    <span class="method">GET</span>
-                    <span class="path">/userstyles</span>
-                </div>
-                <div class="desc">List all userstyles</div>
-                <div class="params">page, per_page</div>
-                <div class="example">curl "https://catppuccin.dvh.sh/userstyles?page=1&per_page=10"</div>
-            </div>
-            <div class="endpoint">
-                <div class="method-path">
-                    <span class="method">GET</span>
-                    <span class="path">/userstyles/{id}</span>
-                </div>
-                <div class="desc">Get specific userstyle</div>
-                <div class="example">curl https://catppuccin.dvh.sh/userstyles/youtube</div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>Collaborators</h2>
-            <div class="endpoint">
-                <div class="method-path">
-                    <span class="method">GET</span>
-                    <span class="path">/collaborators</span>
-                </div>
-                <div class="desc">List collaborators</div>
-                <div class="params">page, per_page</div>
-                <div class="example">curl "https://catppuccin.dvh.sh/collaborators?page=1&per_page=20"</div>
-            </div>
-            <div class="endpoint">
-                <div class="method-path">
-                    <span class="method">GET</span>
-                    <span class="path">/collaborators/{username}</span>
-                </div>
-                <div class="desc">Get collaborator</div>
-                <div class="example">curl https://catppuccin.dvh.sh/collaborators/uncenter</div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>Categories</h2>
-            <div class="endpoint">
-                <div class="method-path">
-                    <span class="method">GET</span>
-                    <span class="path">/categories</span>
-                </div>
-                <div class="desc">List categories</div>
-                <div class="params">page, per_page</div>
-                <div class="example">curl https://catppuccin.dvh.sh/categories</div>
-            </div>
-            <div class="endpoint">
-                <div class="method-path">
-                    <span class="method">GET</span>
-                    <span class="path">/categories/{key}</span>
-                </div>
-                <div class="desc">Get category</div>
-                <div class="example">curl https://catppuccin.dvh.sh/categories/terminal</div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>Other</h2>
-            <div class="endpoint">
-                <div class="method-path">
-                    <span class="method">GET</span>
-                    <span class="path">/showcases</span>
-                </div>
-                <div class="desc">Featured projects</div>
-                <div class="params">page, per_page</div>
-                <div class="example">curl https://catppuccin.dvh.sh/showcases</div>
-            </div>
-            <div class="endpoint">
-                <div class="method-path">
-                    <span class="method">GET</span>
-                    <span class="path">/palette</span>
-                </div>
-                <div class="desc">Color palette</div>
-                <div class="example">curl https://catppuccin.dvh.sh/palette</div>
-            </div>
-        </div>
-
-        <div class="footer">
-            <p>API: <a href="https://catppuccin.dvh.sh" target="_blank">catppuccin.dvh.sh</a></p>
-            <p>Source: <a href="https://github.com/dvh-sh/catppuccin.dvh.sh" target="_blank">GitHub</a></p>
-        </div>
+        <p>
+          Source:
+          <a href="https://github.com/dvh-sh/catppuccin.dvh.sh" target="_blank"
+            >GitHub</a
+          >
+        </p>
+      </div>
     </div>
-</body>
+  </body>
 </html>
