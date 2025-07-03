@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: catppuccin.dvh.sh CI/CD
 
 on:
   push:
