@@ -453,6 +453,122 @@ namespace Catppuccin
     }
 
     /*
+     * @brief Retrieves a paginated list of Catppuccin userstyles.
+     */
+    ApiResponse CatppuccinAPI::getUserstyles(int page, int per_page)
+    {
+        ApiResponse response;
+
+        if (!fetcher_.isCacheValid(USERSTYLES))
+        {
+            ApiResponse fetch_result = fetcher_.fetchAndCacheData(USERSTYLES);
+            if (!fetch_result.success)
+                return fetch_result;
+        }
+
+        try
+        {
+            const json &data = fetcher_.getCachedData(USERSTYLES);
+            json all_userstyles = json::array();
+
+            if (data.contains("userstyles") && data["userstyles"].is_array())
+            {
+                for (const auto &userstyle : data["userstyles"])
+                {
+                    json u = userstyle;
+                    u["is-userstyle"] = true;
+                    all_userstyles.push_back(u);
+                }
+            }
+            else if (data.is_array())
+            {
+                // Handle case where data is directly an array
+                for (const auto &userstyle : data)
+                {
+                    json u = userstyle;
+                    u["is-userstyle"] = true;
+                    all_userstyles.push_back(u);
+                }
+            }
+
+            PaginationInfo pagination = calculatePagination(all_userstyles.size(), page, per_page);
+            json paginated_data = paginateArray(all_userstyles, pagination);
+
+            response.data = json::object();
+            response.data["userstyles"] = paginated_data;
+            response.data["pagination"] = {
+                {"page", pagination.page},
+                {"per_page", pagination.per_page},
+                {"total_items", pagination.total_items},
+                {"total_pages", pagination.total_pages}};
+            response.success = true;
+        }
+        catch (const std::exception &e)
+        {
+            response.error_message = "Error processing userstyles: " + std::string(e.what());
+        }
+
+        return response;
+    }
+
+    /*
+     * @brief Retrieves a specific Catppuccin userstyle by its identifier.
+     */
+    ApiResponse CatppuccinAPI::getUserstyle(const std::string &identifier)
+    {
+        ApiResponse response;
+
+        if (!fetcher_.isCacheValid(USERSTYLES))
+        {
+            ApiResponse fetch_result = fetcher_.fetchAndCacheData(USERSTYLES);
+            if (!fetch_result.success)
+                return fetch_result;
+        }
+
+        try
+        {
+            const json &data = fetcher_.getCachedData(USERSTYLES);
+
+            // Search in userstyles array
+            if (data.contains("userstyles") && data["userstyles"].is_array())
+            {
+                for (const auto &userstyle : data["userstyles"])
+                {
+                    if (userstyle.contains("key") && userstyle["key"] == identifier)
+                    {
+                        response.data = userstyle;
+                        response.data["is-userstyle"] = true;
+                        response.success = true;
+                        return response;
+                    }
+                }
+            }
+            else if (data.is_array())
+            {
+                // Handle case where data is directly an array
+                for (const auto &userstyle : data)
+                {
+                    if (userstyle.contains("key") && userstyle["key"] == identifier)
+                    {
+                        response.data = userstyle;
+                        response.data["is-userstyle"] = true;
+                        response.success = true;
+                        return response;
+                    }
+                }
+            }
+
+            response.error_message = "Userstyle not found: " + identifier;
+        }
+        catch (const std::exception &e)
+        {
+            response.error_message = "Error finding userstyle: " + std::string(e.what());
+        }
+
+        return response;
+    }
+
+    /*
      * @brief Retrieves the Catppuccin color palette.
      * @returns {ApiResponse} Response containing the color palette data.
      */

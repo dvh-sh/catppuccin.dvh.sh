@@ -145,6 +145,34 @@ namespace Catppuccin
                 res.set_content(json::object({{"error", response.error_message}}).dump(), "application/json");
             } });
 
+        // GET /userstyles
+        server.Get("/userstyles", [this](const httplib::Request &req, httplib::Response &res)
+                   {
+    int page = req.has_param("page") ? std::atoi(req.get_param_value("page").c_str()) : 1;
+    int per_page = req.has_param("per_page") ? std::atoi(req.get_param_value("per_page").c_str()) : 20;
+    
+    ApiResponse response = getUserstyles(page, per_page);
+    
+    if (response.success) {
+        res.set_content(response.data.dump(2), "application/json");
+    } else {
+        res.status = 500;
+        res.set_content(json::object({{"error", response.error_message}}).dump(), "application/json");
+    } });
+
+        // GET /userstyles/:identifier
+        server.Get("/userstyles/(.*)", [this](const httplib::Request &req, httplib::Response &res)
+                   {
+    std::string identifier = req.matches[1];
+    ApiResponse response = getUserstyle(identifier);
+    
+    if (response.success) {
+        res.set_content(response.data.dump(2), "application/json");
+    } else {
+        res.status = 404;
+        res.set_content(json::object({{"error", response.error_message}}).dump(), "application/json");
+    } });
+
         // GET /palette
         server.Get("/palette", [this](const httplib::Request &, httplib::Response &res)
                    {

@@ -138,6 +138,21 @@ namespace Catppuccin
         ApiResponse getShowcases(int page = 1, int per_page = 20);
 
         /*
+         * @brief Retrieves a paginated list of Catppuccin userstyles.
+         * @param {int} page - The page number to retrieve. Defaults to 1.
+         * @param {int} per_page - The number of items per page. Defaults to 20.
+         * @returns {ApiResponse} Response containing userstyle data or an error.
+         */
+        ApiResponse getUserstyles(int page = 1, int per_page = 20);
+
+        /*
+         * @brief Retrieves a specific Catppuccin userstyle by its identifier.
+         * @param {const std::string&} identifier - The unique key of the userstyle.
+         * @returns {ApiResponse} Response containing userstyle data or a "not found" error.
+         */
+        ApiResponse getUserstyle(const std::string &identifier);
+
+        /*
          * @brief Retrieves the Catppuccin color palette.
          * @returns {ApiResponse} Response containing the color palette data.
          */

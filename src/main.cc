@@ -66,6 +66,8 @@ int main()
         std::cout << "  GET /collaborators?page=1&per_page=20 - List collaborators" << std::endl;
         std::cout << "  GET /categories?page=1&per_page=20    - List categories" << std::endl;
         std::cout << "  GET /showcases?page=1&per_page=20     - List showcases" << std::endl;
+        std::cout << "  GET /userstyles?page=1&per_page=20    - List userstyles" << std::endl;
+        std::cout << "  GET /userstyles/:identifier           - Get specific userstyle" << std::endl;
         std::cout << "  GET /palette                          - Color palette" << std::endl;
         std::cout << "  GET /metrics                          - Performance metrics" << std::endl;
         std::cout << std::endl;
