@@ -1,0 +1,25 @@
+Contact: https://github.com/dvh-sh/catppuccin.dvh.sh/security/advisories/new
+Contact: mailto:david@dvh.sh
+Canonical: https://catppuccin.dvh.sh/.well-known/security.txt
+Preferred-Languages: en
+Policy: https://github.com/dvh-sh/catppuccin.dvh.sh/blob/main/SECURITY.md
+Acknowledgments: https://github.com/dvh-sh/catppuccin.dvh.sh/blob/main/CONTRIBUTORS.md
+Expires: 2026-07-03T00:00:00.000Z
+
+# Security Policy
+# 
+# Please report security vulnerabilities through:
+# 1. GitHub Security Advisories (preferred)
+# 2. Email to david@dvh.sh
+# 
+# Please include:
+# - Description of the vulnerability
+# - Steps to reproduce
+# - Potential impact
+# - Any suggested fixes
+# 
+# We will respond within 48 hours and provide updates
+# on our progress in resolving the issue.
+# 
+# Please do not publicly disclose the vulnerability
+# until we have had a chance to address it.

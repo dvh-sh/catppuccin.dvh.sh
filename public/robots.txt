@@ -1,0 +1,32 @@
+User-agent: *
+Allow: /
+Allow: /health
+Allow: /palette
+Disallow: /ports/*
+Disallow: /userstyles/*
+Disallow: /categories/*
+Disallow: /collaborators/*
+Disallow: /showcases/*
+
+# Allow access to main endpoints for documentation purposes
+Allow: /ports$
+Allow: /userstyles$
+Allow: /categories$
+Allow: /collaborators$
+Allow: /showcases$
+
+# Rate limiting
+Crawl-delay: 2
+
+# Sitemap location
+Sitemap: https://catppuccin.dvh.sh/sitemap.xml
+
+# Popular crawlers
+User-agent: Googlebot
+Crawl-delay: 1
+
+User-agent: Bingbot
+Crawl-delay: 2
+
+User-agent: Slurp
+Crawl-delay: 3
