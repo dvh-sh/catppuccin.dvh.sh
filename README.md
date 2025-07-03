@@ -30,7 +30,7 @@ The recommended way to run this API is with Docker.
 
 2.  **Build and run using Docker Compose:**
     ```bash
-    docker-compose up --build -d
+    docker compose up --build -d
     ```
 
 The API will be available at `http://localhost:8080`.
@@ -109,8 +109,8 @@ The Makefile provides targets for both production and debugging.
     ```
 
 ## Acknowledgements
-- (nlohmann/json)[https://github.com/nlohmann/json]
-- (yhirose/cpp-httplib)[https://github.com/yhirose/cpp-httplib]
+- [nlohmann/json](https://github.com/nlohmann/json)
+- [yhirose/cpp-httplib](https://github.com/yhirose/cpp-httplib)
 
 ## License
 
