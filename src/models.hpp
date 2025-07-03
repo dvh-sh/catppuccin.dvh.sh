@@ -36,11 +36,30 @@ namespace Catppuccin
     class optional
     {
     private:
-        bool has_value_; ///< Indicates whether the optional holds a value.
-        T value_;        ///< The stored value.
+        bool has_value_;
+        T value_;
+
     public:
         optional() : has_value_(false) {}
         optional(const T &value) : has_value_(true), value_(value) {}
+
+        // Add assignment operators
+        optional &operator=(const T &value)
+        {
+            has_value_ = true;
+            value_ = value;
+            return *this;
+        }
+
+        optional &operator=(const optional &other)
+        {
+            has_value_ = other.has_value_;
+            if (has_value_)
+            {
+                value_ = other.value_;
+            }
+            return *this;
+        }
 
         bool has_value() const { return has_value_; }
         const T &value() const { return value_; }

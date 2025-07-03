@@ -45,6 +45,7 @@
 
 # Binary files
 catppuccin-api
+test-runner
 
 # Build directories
 build/

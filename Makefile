@@ -3,9 +3,15 @@ build ?= release
 
 SRC_DIR = src
 BUILD_DIR = build
+TEST_DIR = tests
 TARGET = catppuccin-api
+TEST_TARGET = test-runner
+
 SOURCES = $(wildcard $(SRC_DIR)/*.cc)
 OBJECTS = $(patsubst $(SRC_DIR)/%.cc, $(BUILD_DIR)/%.o, $(SOURCES))
+
+TEST_SOURCES = $(wildcard $(TEST_DIR)/*.cc)
+TEST_OBJECTS = $(patsubst $(TEST_DIR)/%.cc, $(BUILD_DIR)/test_%.o, $(TEST_SOURCES))
 
 COMMON_CXXFLAGS = -std=c++17 -Wall -Wextra -I./include -I./src
 COMMON_LDFLAGS = -lpthread
@@ -45,6 +51,12 @@ $(TARGET): $(OBJECTS)
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cc | $(BUILD_DIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+$(BUILD_DIR)/test_%.o: $(TEST_DIR)/%.cc | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -I./tests -c $< -o $@
+
+$(TEST_TARGET): $(TEST_OBJECTS) $(filter-out $(BUILD_DIR)/main.o, $(OBJECTS))
+	$(CXX) $(filter-out $(BUILD_DIR)/main.o, $(OBJECTS)) $(TEST_OBJECTS) -o $@ $(LDFLAGS)
+
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
@@ -54,7 +66,16 @@ run: release
 run-debug: debug
 	./$(TARGET)
 
-clean:
-	rm -rf $(BUILD_DIR) $(TARGET)
+test: $(TEST_TARGET)
+	./$(TEST_TARGET)
 
-.PHONY: all release debug run run-debug clean
+test-verbose: $(TEST_TARGET)
+	./$(TEST_TARGET) -s
+
+test-debug:
+	$(MAKE) test build=debug
+
+clean:
+	rm -rf $(BUILD_DIR) $(TARGET) $(TEST_TARGET)
+
+.PHONY: all release debug run run-debug test test-verbose test-debug clean
