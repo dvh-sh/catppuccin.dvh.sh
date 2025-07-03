@@ -34,7 +34,7 @@ The recommended way to run this API is with Docker.
     docker compose up --build -d
     ```
 
-The API will be available at `http://localhost:8080`.
+The API will be available at `http://localhost:3000`.
 
 ## API Endpoints
 
@@ -68,9 +68,9 @@ The application is configured using environment variables.
 | Variable      | Description                                  | Default   |
 | :------------ | :------------------------------------------- | :-------- |
 | `HOST`        | The network address to bind the server to.   | `0.0.0.0` |
-| `PORT`        | The port for the server to listen on.        | `8080`    |
+| `PORT`        | The port for the server to listen on.        | `3000`    |
 | `THREADS`     | The number of worker threads for the server. | `4`       |
-| `RATE_LIMIT`  | The number of requests allowed per window.   | `100`     |
+| `RATE_LIMIT`  | The number of requests allowed per window.   | `100000`     |
 | `RATE_WINDOW` | The duration of the rate limit window (sec). | `3600`    |
 | `CACHE_TTL`   | Cache time-to-live in seconds.               | `300`     |
 | `VERBOSE`     | Enable verbose logging (`true`/`false`).     | `false`   |
