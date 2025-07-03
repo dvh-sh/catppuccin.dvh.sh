@@ -1,7 +1,6 @@
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Wextra -O3 -march=native -mtune=native \
-           -flto -ffast-math -funroll-loops -finline-functions \
-           -DNDEBUG -fno-exceptions -fno-rtti
+           -flto -ffast-math -funroll-loops -finline-functions -DNDEBUG
 LDFLAGS = -static-libgcc -static-libstdc++ -s -Wl,--gc-sections -flto
 LIBS = -lpthread
 
@@ -16,7 +15,7 @@ all: release
 
 # Debug build
 debug: CXXFLAGS = -std=c++17 -Wall -Wextra -O0 -g -DDEBUG
-debug: LDFLAGS = 
+debug: LDFLAGS =
 debug: $(TARGET)
 
 # Release build
@@ -42,3 +41,4 @@ install: $(TARGET)
 	cp $(TARGET) /usr/local/bin/
 
 .PHONY: all debug release run clean install
+
