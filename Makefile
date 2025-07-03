@@ -1,44 +1,60 @@
-CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra -O3 -march=native -mtune=native \
-           -flto -ffast-math -funroll-loops -finline-functions -DNDEBUG
-LDFLAGS = -static-libgcc -static-libstdc++ -s -Wl,--gc-sections -flto
-LIBS = -lpthread
+CXX ?= g++
+build ?= release
 
 SRC_DIR = src
 BUILD_DIR = build
-SOURCES = $(wildcard $(SRC_DIR)/*.cc)
-OBJECTS = $(SOURCES:$(SRC_DIR)/%.cc=$(BUILD_DIR)/%.o)
 TARGET = catppuccin-api
+SOURCES = $(wildcard $(SRC_DIR)/*.cc)
+OBJECTS = $(patsubst $(SRC_DIR)/%.cc, $(BUILD_DIR)/%.o, $(SOURCES))
 
-# Release build (default)
-all: release
+COMMON_CXXFLAGS = -std=c++17 -Wall -Wextra -I./include -I./src
+COMMON_LDFLAGS = -lpthread
 
-# Debug build
-debug: CXXFLAGS = -std=c++17 -Wall -Wextra -O0 -g -DDEBUG
-debug: LDFLAGS =
-debug: $(TARGET)
+ifeq ($(build),release)
+    BUILD_CXXFLAGS = -O3 -DNDEBUG
+    BUILD_LDFLAGS = -s
+else
+    BUILD_CXXFLAGS = -O0 -g -DDEBUG
+    BUILD_LDFLAGS =
+endif
 
-# Release build
-release: $(TARGET)
+ifeq ($(build),release)
+    ifeq ($(findstring g++,$(CXX)),g++)
+        COMPILER_CXXFLAGS = -march=native -mtune=native -flto -ffast-math -funroll-loops -finline-functions
+        COMPILER_LDFLAGS = -static-libgcc -static-libstdc++ -Wl,--gc-sections -flto
+    else ifeq ($(findstring clang++,$(CXX)),clang++)
+        COMPILER_CXXFLAGS = -march=native -mtune=native -flto
+        COMPILER_LDFLAGS = -Wl,-dead_strip
+    endif
+endif
+
+CXXFLAGS = $(COMMON_CXXFLAGS) $(BUILD_CXXFLAGS) $(COMPILER_CXXFLAGS)
+LDFLAGS = $(COMMON_LDFLAGS) $(BUILD_LDFLAGS) $(COMPILER_LDFLAGS)
+
+all: $(TARGET)
+
+release:
+	$(MAKE) all build=release
+
+debug:
+	$(MAKE) all build=debug
+
+$(TARGET): $(OBJECTS)
+	$(CXX) $(OBJECTS) -o $@ $(LDFLAGS)
+
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cc | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cc | $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) -I./include -I./src -c $< -o $@
+run: release
+	./$(TARGET)
 
-$(TARGET): $(OBJECTS)
-	$(CXX) $(OBJECTS) -o $(TARGET) $(LIBS) $(LDFLAGS)
-	strip --strip-all $(TARGET) 2>/dev/null || true
-
-run: $(TARGET)
+run-debug: debug
 	./$(TARGET)
 
 clean:
 	rm -rf $(BUILD_DIR) $(TARGET)
 
-install: $(TARGET)
-	cp $(TARGET) /usr/local/bin/
-
-.PHONY: all debug release run clean install
-
+.PHONY: all release debug run run-debug clean
