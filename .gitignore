@@ -48,3 +48,6 @@ catppuccin-api
 
 # Build directories
 build/
+
+# Temporary files
+.DS_Store
