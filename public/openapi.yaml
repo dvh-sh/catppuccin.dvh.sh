@@ -1,0 +1,399 @@
+openapi: 3.0.3
+info:
+  title: Catppuccin API
+  description: A fast, lightweight, and unofficial REST API for accessing Catppuccin themes, ports, userstyles, collaborators, and color palettes. Built with C++ for optimal performance.
+  version: 1.0.0
+  contact:
+    name: David
+    url: https://dvh.sh
+    email: david@dvh.sh
+  license:
+    name: MIT
+    url: https://github.com/dvh-sh/catppuccin.dvh.sh/blob/main/LICENSE
+servers:
+  - url: https://catppuccin.dvh.sh
+    description: Production Server
+
+paths:
+  /health:
+    get:
+      summary: Health Check
+      description: Check the operational status of the API.
+      tags: [General]
+      responses:
+        '200':
+          description: Service is healthy.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { type: string, example: "ok" }
+  /palette:
+    get:
+      summary: Get Color Palette
+      description: Retrieve the full Catppuccin color palette for all four flavors.
+      tags: [General]
+      responses:
+        '200':
+          description: A JSON object containing all color palettes.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  latte: { type: object }
+                  frappe: { type: object }
+                  macchiato: { type: object }
+                  mocha: { type: object }
+  /rate-limit-status:
+    get:
+      summary: Get Rate Limit Status
+      description: Check the current rate limit status for your IP address.
+      tags: [General]
+      responses:
+        '200':
+          description: Current rate limit information.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  limit: { type: integer, example: 100 }
+                  used: { type: integer, example: 5 }
+                  remaining: { type: integer, example: 95 }
+                  reset_in_seconds: { type: integer, example: 3500 }
+                  client_ip: { type: string, example: "192.168.1.1" }
+  /metrics:
+    get:
+      summary: Get API Metrics
+      description: Retrieve performance and usage metrics for the API server.
+      tags: [General]
+      responses:
+        '200':
+          description: Server performance metrics.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  uptime_seconds: { type: integer }
+                  total_requests: { type: integer }
+                  # ... other metrics
+  /ports:
+    get:
+      summary: List All Ports
+      description: Get a paginated list of all Catppuccin ports (themes for applications).
+      tags: [Ports]
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          description: A paginated list of ports.
+          headers: { $ref: '#/components/headers/RateLimitHeaders' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ports:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Port'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '429': { $ref: '#/components/responses/RateLimitExceeded' }
+        '500': { $ref: '#/components/responses/ServerError' }
+  /ports/{key}:
+    get:
+      summary: Get a Specific Port
+      description: Retrieve a single port by its unique key (e.g., "nvim", "vscode").
+      tags: [Ports]
+      parameters:
+        - name: key
+          in: path
+          required: true
+          schema: { type: string }
+          description: The unique key of the port.
+      responses:
+        '200':
+          description: The requested port object.
+          headers: { $ref: '#/components/headers/RateLimitHeaders' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Port' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '429': { $ref: '#/components/responses/RateLimitExceeded' }
+        '500': { $ref: '#/components/responses/ServerError' }
+  /userstyles:
+    get:
+      summary: List All Userstyles
+      description: Get a paginated list of all Catppuccin userstyles (themes for websites).
+      tags: [Userstyles]
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          description: A paginated list of userstyles.
+          headers: { $ref: '#/components/headers/RateLimitHeaders' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userstyles:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Userstyle'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '429': { $ref: '#/components/responses/RateLimitExceeded' }
+        '500': { $ref: '#/components/responses/ServerError' }
+  /userstyles/{key}:
+    get:
+      summary: Get a Specific Userstyle
+      description: Retrieve a single userstyle by its unique key (e.g., "youtube", "github").
+      tags: [Userstyles]
+      parameters:
+        - name: key
+          in: path
+          required: true
+          schema: { type: string }
+          description: The unique key of the userstyle.
+      responses:
+        '200':
+          description: The requested userstyle object.
+          headers: { $ref: '#/components/headers/RateLimitHeaders' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Userstyle' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '429': { $ref: '#/components/responses/RateLimitExceeded' }
+        '500': { $ref: '#/components/responses/ServerError' }
+  /categories:
+    get:
+      summary: List All Categories
+      description: Get a paginated list of all available categories for ports and userstyles.
+      tags: [Categories]
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          description: A paginated list of categories.
+          headers: { $ref: '#/components/headers/RateLimitHeaders' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  categories:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Category'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '429': { $ref: '#/components/responses/RateLimitExceeded' }
+        '500': { $ref: '#/components/responses/ServerError' }
+  /categories/{key}:
+    get:
+      summary: Get a Specific Category
+      description: Retrieve a single category by its unique key.
+      tags: [Categories]
+      parameters:
+        - name: key
+          in: path
+          required: true
+          schema: { type: string }
+          description: The unique key of the category.
+      responses:
+        '200':
+          description: The requested category object.
+          headers: { $ref: '#/components/headers/RateLimitHeaders' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Category' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '429': { $ref: '#/components/responses/RateLimitExceeded' }
+        '500': { $ref: '#/components/responses/ServerError' }
+  /collaborators:
+    get:
+      summary: List All Collaborators
+      description: Get a paginated list of all collaborators across all projects.
+      tags: [Collaborators]
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          description: A paginated list of collaborators.
+          headers: { $ref: '#/components/headers/RateLimitHeaders' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  collaborators:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Collaborator'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '429': { $ref: '#/components/responses/RateLimitExceeded' }
+        '500': { $ref: '#/components/responses/ServerError' }
+  /collaborators/{username}:
+    get:
+      summary: Get a Specific Collaborator
+      description: Retrieve a single collaborator by their GitHub username.
+      tags: [Collaborators]
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema: { type: string }
+          description: The GitHub username of the collaborator.
+      responses:
+        '200':
+          description: The requested collaborator object.
+          headers: { $ref: '#/components/headers/RateLimitHeaders' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Collaborator' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '429': { $ref: '#/components/responses/RateLimitExceeded' }
+        '500': { $ref: '#/components/responses/ServerError' }
+  /showcases:
+    get:
+      summary: List All Showcases
+      description: Get a paginated list of featured projects using Catppuccin.
+      tags: [Showcases]
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          description: A paginated list of showcases.
+          headers: { $ref: '#/components/headers/RateLimitHeaders' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  showcases:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Showcase'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '429': { $ref: '#/components/responses/RateLimitExceeded' }
+        '500': { $ref: '#/components/responses/ServerError' }
+
+components:
+  parameters:
+    Page:
+      name: page
+      in: query
+      description: The page number to retrieve.
+      required: false
+      schema: { type: integer, default: 1, minimum: 1 }
+    PerPage:
+      name: per_page
+      in: query
+      description: The number of items per page.
+      required: false
+      schema: { type: integer, default: 20, minimum: 1, maximum: 100 }
+  headers:
+    RateLimitHeaders:
+      X-RateLimit-Limit: { schema: { type: integer }, description: The maximum number of requests you're permitted to make per hour. }
+      X-RateLimit-Remaining: { schema: { type: integer }, description: The number of requests remaining in the current rate limit window. }
+      X-RateLimit-Reset: { schema: { type: integer }, description: The time at which the current rate limit window resets in UTC epoch seconds. }
+      X-RateLimit-Used: { schema: { type: integer }, description: The number of requests you've made in the current rate limit window. }
+  responses:
+    NotFound:
+      description: The requested resource could not be found.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    RateLimitExceeded:
+      description: Rate limit exceeded.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    ServerError:
+      description: An unexpected internal server error occurred.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+  schemas:
+    Error:
+      type: object
+      properties:
+        error: { type: string, example: "Not Found" }
+        message: { type: string, example: "Resource not found" }
+        status: { type: integer, example: 404 }
+    Pagination:
+      type: object
+      properties:
+        page: { type: integer, example: 1 }
+        per_page: { type: integer, example: 20 }
+        total_items: { type: integer, example: 250 }
+        total_pages: { type: integer, example: 13 }
+    Link:
+      type: object
+      properties:
+        name: { type: string, example: "Marketplace" }
+        url: { type: string, format: uri, example: "https://marketplace.visualstudio.com/items?itemName=Catppuccin.catppuccin-vsc" }
+        icon: { type: string, example: "visualstudiocode" }
+        color: { type: string, example: "blue" }
+    Repository:
+      type: object
+      properties:
+        name: { type: string, example: "vscode" }
+        url: { type: string, format: uri, example: "https://github.com/catppuccin/vscode" }
+        current-maintainers: { type: array, items: { type: string, example: "pocco-a-poco" } }
+        past-maintainers: { type: array, items: { type: string } }
+    Port:
+      type: object
+      properties:
+        key: { type: string, example: "vscode" }
+        name: { type: string, example: "Visual Studio Code" }
+        categories: { type: array, items: { type: string, example: "code_editor" } }
+        platform: { type: array, items: { type: string, example: "linux" } }
+        color: { type: string, example: "blue" }
+        icon: { type: string, example: "visualstudiocode" }
+        upstreamed: { type: boolean, example: false }
+        repository: { $ref: '#/components/schemas/Repository' }
+        links: { type: array, items: { $ref: '#/components/schemas/Link' } }
+        is-archived: { type: boolean, example: false }
+    Userstyle:
+      type: object
+      properties:
+        key: { type: string, example: "youtube" }
+        name: { type: string, example: "YouTube" }
+        categories: { type: array, items: { type: string, example: "entertainment" } }
+        link: { type: string, format: uri, example: "https://youtube.com" }
+        color: { type: string, example: "red" }
+        icon: { type: string, example: "youtube" }
+        note: { type: string, nullable: true }
+        current-maintainers: { type: array, items: { type: string, example: "isabelinc" } }
+        past-maintainers: { type: array, items: { type: string } }
+    Category:
+      type: object
+      properties:
+        key: { type: string, example: "terminal" }
+        name: { type: string, example: "Terminal" }
+        description: { type: string, example: "Themes for terminal emulators and shells." }
+        emoji: { type: string, example: "💻" }
+    Collaborator:
+      type: object
+      properties:
+        username: { type: string, example: "uncenter" }
+        url: { type: string, format: uri, example: "https://github.com/uncenter" }
+    Showcase:
+      type: object
+      properties:
+        title: { type: string, example: "My Awesome Desktop" }
+        description: { type: string, example: "A custom Linux desktop setup featuring Catppuccin." }
+        link: { type: string, format: uri, example: "https://reddit.com/r/unixporn/..." }

@@ -116,6 +116,7 @@ The Makefile provides targets for both production and debugging.
 
 - [nlohmann/json](https://github.com/nlohmann/json)
 - [yhirose/cpp-httplib](https://github.com/yhirose/cpp-httplib)
+- [catchorg/Catch2](https://github.com/catchorg/Catch2)
 
 ## License
 
