@@ -47,7 +47,7 @@ namespace Catppuccin
         static int getRateLimit()
         {
             const char *env = std::getenv("RATE_LIMIT");
-            return env ? std::atoi(env) : 100;
+            return env ? std::atoi(env) : 100000; // 100,000 requests per hour
         }
 
         static int getRateWindow()
