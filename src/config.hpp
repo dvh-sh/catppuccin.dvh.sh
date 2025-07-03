@@ -34,7 +34,7 @@ namespace Catppuccin
         static int getPort()
         {
             const char *env = std::getenv("PORT");
-            return env ? std::atoi(env) : 8080;
+            return env ? std::atoi(env) : 3000;
         }
 
         static int getThreads()
