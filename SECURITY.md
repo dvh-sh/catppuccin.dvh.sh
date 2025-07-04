@@ -36,7 +36,7 @@ We ask that you follow the principles of responsible disclosure:
 -   **Do not** access or modify user data without permission.
 -   Act in good faith to avoid privacy violations, destruction of data, and interruption or degradation of our service during your research.
 
-Thank you for helping keep the Catppiacin API and its users safe.
+Thank you for helping keep the Catppuccin API and its users safe.
 # Security Policy
 
 ## Reporting a Vulnerability
