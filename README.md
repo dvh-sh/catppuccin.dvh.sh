@@ -47,6 +47,8 @@ All endpoints return JSON data.
 | `GET`  | `/palette`                 | Returns the complete Catppuccin color palette. |
 | `GET`  | `/ports`                   | Lists all ports, paginated.                    |
 | `GET`  | `/ports/:identifier`       | Retrieves a specific port by its key.          |
+| `GET`  | `/userstyles`              | Lists all userstyles, paginated.               |
+| `GET`  | `/userstyles/:identifier`  | Retrieves a specific userstyle by its key.     |
 | `GET`  | `/collaborators`           | Lists all collaborators, paginated.            |
 | `GET`  | `/collaborators/:username` | Retrieves a specific collaborator.             |
 | `GET`  | `/categories`              | Lists all categories, paginated.               |
